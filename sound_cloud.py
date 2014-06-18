@@ -1,5 +1,8 @@
 import soundcloud
 import urllib
+import sys
+
+sys.setdefaultencoding('iso-8859-1')
 
 CLIENT_ID = 'c73fb7771f05466a2bf445811b3bb60c'
 ARTIST = 'deejaytrademark'
