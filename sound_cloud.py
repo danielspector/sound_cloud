@@ -10,13 +10,14 @@ user = client.get('/resolve', url='https://soundcloud.com/'+ARTIST)
 user_id = str(user.id)
 # fetch track to stream
 tracks = client.get('/users/'+user_id+'/tracks')
-counter = 1
-
-print "about to start...."
+track_nums = len(tracks)
+print "about to start.... printing " + str(track_nums) + " songs"
 for track in tracks:
+  print "Downloading " + str(track.title)
   stream_url = client.get(track.stream_url, allow_redirects=False)
-  urllib.urlretrieve(stream_url.location, "/Users/danielspector/projects/code/sound_cloud/downloads/djt_track_"+str(counter)+".mp3")
-  counter += 1
+  urllib.urlretrieve(stream_url.location, "/Users/danielspector/projects/code/sound_cloud/downloads/"+str(user.username)+" - "+str(track.title)+".mp3")
+  track_nums -= 1
+  print str(track_nums) + " left to download"
 
 print "done"
 
