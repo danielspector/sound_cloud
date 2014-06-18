@@ -1,7 +1,10 @@
+#!/usr/bin/env python 
+
 import soundcloud
 import urllib
 import sys
 import os
+import time
 
 reload(sys)
 sys.setdefaultencoding("UTF-8")
@@ -20,16 +23,19 @@ print "about to start.... printing " + str(track_nums) + " songs"
 
 current_path = os.getcwd()
 downloads_path = current_path + "/downloads/"
+artist_path = downloads_path + ARTIST + "/"
 if not os.path.exists(downloads_path):
     os.makedirs(downloads_path)
 
+if not os.path.exists(artist_path):
+    os.makedirs(artist_path)
+    
 for track in tracks:
-  print "Downloading " + str(track.title)
+  print "Downloading... " + str(track.title) + " by " + user.username
   stream_url = client.get(track.stream_url, allow_redirects=False)
-  urllib.urlretrieve(stream_url.location, downloads_path + str(user.username) + " - "+str(track.title)+".mp3")
+  urllib.urlretrieve(stream_url.location, artist_path + str(user.username) + " - "+str(track.title)+".mp3")
   track_nums -= 1
   print str(track_nums) + " left to download"
 
 print "done"
-
 
