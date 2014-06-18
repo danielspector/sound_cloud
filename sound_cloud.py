@@ -1,11 +1,13 @@
 import soundcloud
 import urllib
 import sys
+import os
 
-sys.setdefaultencoding('iso-8859-1')
+reload(sys)
+sys.setdefaultencoding("UTF-8")
 
 CLIENT_ID = 'c73fb7771f05466a2bf445811b3bb60c'
-ARTIST = 'deejaytrademark'
+ARTIST = sys.argv[1]
 # create a client object with your app credentials
 client = soundcloud.Client(client_id=CLIENT_ID)
 
@@ -15,10 +17,16 @@ user_id = str(user.id)
 tracks = client.get('/users/'+user_id+'/tracks')
 track_nums = len(tracks)
 print "about to start.... printing " + str(track_nums) + " songs"
+
+current_path = os.getcwd()
+downloads_path = current_path + "/downloads/"
+if not os.path.exists(downloads_path):
+    os.makedirs(downloads_path)
+
 for track in tracks:
   print "Downloading " + str(track.title)
   stream_url = client.get(track.stream_url, allow_redirects=False)
-  urllib.urlretrieve(stream_url.location, "/Users/danielspector/projects/code/sound_cloud/downloads/"+str(user.username)+" - "+str(track.title)+".mp3")
+  urllib.urlretrieve(stream_url.location, downloads_path + str(user.username) + " - "+str(track.title)+".mp3")
   track_nums -= 1
   print str(track_nums) + " left to download"
 
