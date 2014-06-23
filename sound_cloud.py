@@ -4,7 +4,6 @@ import soundcloud
 import urllib
 import sys
 import os
-import time
 
 reload(sys)
 sys.setdefaultencoding("UTF-8")
@@ -31,6 +30,7 @@ if not os.path.exists(artist_path):
     os.makedirs(artist_path)
     
 for track in tracks:
+  track.title = track.title.replace("/", "-")
   print "Downloading... " + str(track.title) + " by " + user.username
   stream_url = client.get(track.stream_url, allow_redirects=False)
   urllib.urlretrieve(stream_url.location, artist_path + str(user.username) + " - "+str(track.title)+".mp3")
