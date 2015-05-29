@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 
 import soundcloud
 import urllib
@@ -28,14 +28,16 @@ if not os.path.exists(downloads_path):
 
 if not os.path.exists(artist_path):
     os.makedirs(artist_path)
-    
-for track in tracks:
-  track.title = track.title.replace("/", "-")
-  print "Downloading... " + str(track.title) + " by " + user.username
-  stream_url = client.get(track.stream_url, allow_redirects=False)
-  urllib.urlretrieve(stream_url.location, artist_path + str(user.username) + " - "+str(track.title)+".mp3")
-  track_nums -= 1
-  print str(track_nums) + " left to download"
 
+for track in tracks:
+  track.title = track.title.replace("/","-")
+  print "Downloading... " + str(track.title) + " by " + user.username
+  try:
+    stream_url = client.get(track.stream_url, allow_redirects=False)
+    urllib.urlretrieve(stream_url.location, artist_path + str(user.username) + " - "+str(track.title)+".mp3")
+    track_nums -= 1
+    print str(track_nums) + " left to download"
+  except:
+    pass
 print "done"
 
