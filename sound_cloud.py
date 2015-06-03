@@ -31,6 +31,10 @@ if not os.path.exists(artist_path):
 
 for track in tracks:
   track.title = track.title.replace("/","-")
+  file_title = artist_path + str(user.username) + " - "+str(track.title)+".mp3"
+  if os.path.isfile(file_title):
+    print "Skipping" + file_title + " because it already exists"
+    continue
   print "Downloading... " + str(track.title) + " by " + user.username
   try:
     stream_url = client.get(track.stream_url, allow_redirects=False)
